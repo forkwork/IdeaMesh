@@ -1,0 +1,14 @@
+{:deps
+ {ideamesh/graph-parser
+  {:git/url "https://github.com/khulnasoft/ideamesh"
+   :git/sha "82cf4d3c65acbf230a3170640fe271dd74095067"
+   :git/tag "0.9.8"
+   :deps/root "deps/graph-parser"}
+  #_{:local/root "../../ideamesh/deps/graph-parser"}
+
+  ideamesh/bb-tasks
+  #_{:local/root "../../bb-tasks"}
+  {:git/url "https://github.com/khulnasoft/bb-tasks"
+   :git/sha "4295d5df0458cc06a09c5d506510ee49b785407d"}
+
+  org.babashka/cli {:mvn/version "0.5.40"}}}

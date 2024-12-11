@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "@ideamesh/nbb-ideamesh": "^1.1.155",
+    "mldoc": "1.5.1"
+  },
+  "license": "MIT",
+  "scripts": {
+    "multiple-dbs": "nbb-ideamesh multi_db.cljs"
+  }
+}

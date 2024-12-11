@@ -1,0 +1,42 @@
+{:tasks
+ {:requires
+  ([babashka.fs :as fs]
+   [org.httpkit.client :as http])
+
+  :init
+  (do
+    (defn query* [host]
+      (let [query (or (first *command-line-args*)
+                      (throw (ex-info "No query given" {})))
+            resp (deref
+                  (http/get
+                   (format "%s/q" host)
+                   {:query-params {:q query}}))]
+        (if (= 200 (:status resp))
+          (print (:body resp))
+          (prn resp))))
+
+    (defn- get-app-name []
+      (second (re-find (re-pattern "app = \"([\\S]+)\"")
+                       (slurp "fly.toml")))))
+
+  query
+  {:doc "Runs a query against deployed server"
+   :task (query* (str "https://" (get-app-name) ".fly.dev"))}
+
+  dev:query
+  {:doc "Runs a query against dev server"
+   :task (query* "http://localhost:8092")}
+
+  print-query
+  {:doc "Prints url for query against deployed server"
+   :task
+   (let [url (format "%s/q"
+                     (str "https://" (get-app-name) ".fly.dev"))]
+     (print (str url "?q=" (java.net.URLEncoder/encode (first *command-line-args*)))))}
+
+  dev:print-query
+  {:doc "Prints url for query against dev server"
+   :task
+   (let [url "http://localhost:8092/q"]
+     (print (str url "?q=" (java.net.URLEncoder/encode (first *command-line-args*)))))}}}

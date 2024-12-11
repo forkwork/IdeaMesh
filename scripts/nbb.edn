@@ -1,0 +1,6 @@
+{:paths ["src"]
+ :deps
+ {ideamesh/graph-parser
+  {:local/root "../deps/graph-parser"}
+  ideamesh/publishing
+  {:local/root "../deps/publishing"}}}

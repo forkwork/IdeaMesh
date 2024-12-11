@@ -1,0 +1,7 @@
+{:paths ["src"]
+ :api-namespaces [
+                  ;; carve doesn't detect nbb only usage
+                  ideamesh.graph-parser.log
+                  ;; Used in tests
+                  ideamesh.graph-parser.test.docs-graph-helper]
+ :report {:format :ignore}}

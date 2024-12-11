@@ -1,0 +1,4 @@
+{:paths ["src"]
+ :api-namespaces [;; for nbb-ideamesh CLIs
+                  ideamesh.publishing]
+ :report {:format :ignore}}

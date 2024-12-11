@@ -1,0 +1,11 @@
+contact_links:
+  - name: Feature request
+    url: https://discuss.ideamesh.khulnasoft.com/new-topic?category=feature-requests
+    about: Suggest an idea for Ideamesh
+  - name: Questions & Help
+    url: https://discuss.ideamesh.khulnasoft.com/new-topic?category=questions-and-help
+    about: Ask a question about Ideamesh
+  - name: Feedback
+    url: https://discuss.ideamesh.khulnasoft.com/new-topic?category=feedback
+    about: Discuss where Ideamesh can be improved
+

@@ -1,0 +1,11 @@
+{
+  "name": "nbb-ideamesh-from-js",
+  "version": "1.0.0",
+  "type": "module",
+  "dependencies": {
+    "@ideamesh/nbb-ideamesh": "^1.1.158",
+    "mldoc": "1.5.1",
+    "n3": "^1.16.3"
+  },
+  "license": "MIT"
+}

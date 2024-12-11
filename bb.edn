@@ -1,0 +1,148 @@
+{:paths ["scripts/src" "src/main" "src/resources"]
+ :deps
+ {metosin/malli
+  {:mvn/version "0.10.0"}
+  ideamesh/bb-tasks
+  #_{:local/root "../bb-tasks"}
+  {:git/url "https://github.com/khulnasoft/bb-tasks"
+   :git/sha "70d3edeb287f5cec7192e642549a401f7d6d4263"}
+  ideamesh/graph-parser
+  {:local/root "deps/graph-parser"}
+  org.clj-commons/digest
+  {:mvn/version "1.4.100"}}
+ :pods
+ {clj-kondo/clj-kondo {:version "2023.05.26"}
+  org.babashka/fswatcher {:version "0.0.3"}}
+ :tasks
+ {dev:desktop-watch
+  ideamesh.tasks.dev.desktop/watch
+
+  dev:open-dev-electron-app
+  ideamesh.tasks.dev.desktop/open-dev-electron-app
+
+  -dev:electron-start
+  {:depends [dev:desktop-watch dev:open-dev-electron-app]}
+
+  dev:electron-start
+  {:doc "Start electron dev by watching assets and opening dev app"
+   ;; Parallel execution - https://book.babashka.org/#parallel
+   :task (run '-dev:electron-start {:parallel true})}
+
+  dev:app-watch
+  ideamesh.tasks.dev.mobile/app-watch
+
+  -dev:build-publishing-frontend
+  ideamesh.tasks.dev/build-publishing-frontend
+
+  dev:publishing-backend
+  ideamesh.tasks.dev/publishing-backend
+
+  -dev:publishing-release
+  {:depends [-dev:build-publishing-frontend]
+   :doc "Build release publishing spa app given graph and output dirs"
+   :task (run 'dev:publishing-backend)}
+
+  -dev:watch-publishing-frontend
+  ideamesh.tasks.dev/watch-publishing-frontend
+
+  -dev:watch-publishing-backend
+  ideamesh.tasks.dev/watch-publishing-backend
+
+  -dev:publishing-dev
+  {:depends [-dev:watch-publishing-frontend -dev:watch-publishing-backend]
+   :doc "Watch dev publishing spa app given graph and output dirs"}
+
+  dev:publishing
+  {:doc "Builds full publishing app given graph and output dirs. Append --dev to watch frontend"
+   :task (if ((set *command-line-args*) "--dev")
+           (run '-dev:publishing-dev {:parallel true})
+           (run '-dev:publishing-release))}
+
+  dev:npx-cap-run-ios
+  ideamesh.tasks.dev.mobile/npx-cap-run-ios
+
+  -dev:ios-app
+  {:depends [dev:app-watch dev:npx-cap-run-ios]}
+
+  dev:ios-app
+  {:doc "iOS development environment"
+   :task (run '-dev:ios-app {:parallel true})}
+
+  release:ios-app
+  ideamesh.tasks.dev.mobile/run-ios-release
+
+  dev:npx-cap-run-android
+  ideamesh.tasks.dev.mobile/npx-cap-run-android
+
+  -dev:android-app
+  {:depends [dev:app-watch dev:npx-cap-run-android]}
+
+  dev:android-app
+  {:doc "Android development environment"
+   :task (run '-dev:android-app {:parallel true})}
+
+  release:android-app
+  ideamesh.tasks.dev.mobile/run-android-release
+
+  dev:validate-local-storage
+  ideamesh.tasks.spec/validate-local-storage
+
+  dev:validate-plugins-edn
+  ideamesh.tasks.malli/validate-plugins-edn
+
+  dev:validate-repo-config-edn
+  ideamesh.tasks.malli/validate-repo-config-edn
+
+  dev:validate-global-config-edn
+  ideamesh.tasks.malli/validate-global-config-edn
+
+  dev:validate-ast
+  ideamesh.tasks.malli/validate-ast
+
+  dev:lint
+  ideamesh.tasks.dev/lint
+
+  dev:gen-malli-kondo-config
+  ideamesh.tasks.dev/gen-malli-kondo-config
+
+  lint:large-vars
+  ideamesh.bb-tasks.lint.large-vars/-main
+
+  lint:carve
+  ideamesh.bb-tasks.lint.carve/-main
+
+  lint:ns-docstrings
+  ideamesh.bb-tasks.lint.ns-docstrings/-main
+
+  nbb:watch
+  ideamesh.bb-tasks.nbb.watch/watch
+
+  nbb:portal-watch
+  ideamesh.bb-tasks.nbb.watch/portal-watch
+
+  lang:list
+  ideamesh.tasks.lang/list-langs
+
+  lang:missing
+  ideamesh.tasks.lang/list-missing
+
+  lang:validate-translations
+  ideamesh.tasks.lang/validate-translations
+
+  file-sync:integration-tests
+  ideamesh.tasks.file-sync/integration-tests}
+
+ :tasks/config
+ {:large-vars
+  ;; TODO: Get to a smaller max-lines-count
+  {:max-lines-count 100
+   ;; TODO: Address vars tagged with cleanup-todo. These
+   ;; are left mostly because they are not high priority
+   ;; or not well understood
+   :metadata-exceptions #{:large-vars/cleanup-todo}}
+
+  :ns-docstrings
+  {:paths ["src/main"]
+   ;; Ignore namespaces that won't be helpful to document initially
+   ;; e.g. frontend.components.onboarding -> "Onboarding fns"
+   :ignore-regex "^(frontend.components|frontend.extensions|frontend.modules|frontend.mobile|ideamesh.sdk)"}}}

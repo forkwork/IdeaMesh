@@ -1,0 +1,8 @@
+{
+  "name": "@ideamesh/db",
+  "version": "1.0.0",
+  "private": true,
+  "devDependencies": {
+    "@ideamesh/nbb-ideamesh": "^1.2.173"
+  }
+}

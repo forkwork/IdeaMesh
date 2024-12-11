@@ -1,0 +1,12 @@
+{
+  "name": "@ideamesh/nbb-ideamesh-from-js",
+  "version": "1.0.0",
+  "dependencies": {
+    "@ideamesh/nbb-ideamesh": "^1.2.168",
+    "mldoc": "1.5.1"
+  },
+  "bin": {
+    "ideamesh-graph-ast": "graph_ast.mjs"
+  },
+  "license": "MIT"
+}

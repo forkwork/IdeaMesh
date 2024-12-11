@@ -1,0 +1,11 @@
+{
+  "name": "@ideamesh/common",
+  "version": "1.0.0",
+  "private": true,
+  "devDependencies": {
+    "@ideamesh/nbb-ideamesh": "^1.2.173"
+  },
+  "scripts": {
+    "test": "yarn nbb-ideamesh -cp test -m nextjournal.test-runner"
+  }
+}
