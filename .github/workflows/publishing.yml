@@ -1,4 +1,4 @@
-name: ideamesh/publishing CI
+name: forkwork/publishing CI
 
 on:
   # Path filters ensure jobs only kick off if a change is made to publishing or
